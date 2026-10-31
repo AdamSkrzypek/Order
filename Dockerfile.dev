@@ -1,0 +1,4 @@
+FROM maven:3.9-eclipse-temurin-21
+WORKDIR /workspace
+EXPOSE 8081 5005
+CMD ["mvn", "spring-boot:run"]
