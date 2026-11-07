@@ -32,11 +32,13 @@ public class OrderController {
     private final OrderVersionServiceImpl orderVersionService;
 
     @PostMapping("/orders")
+    @ResponseStatus(HttpStatus.CREATED)
     public OrderResponseDTO createOrder(@RequestBody @Valid OrderRequestDTO orderDto) {
         return orderService.createOrder(orderDto);
     }
 
     @GetMapping("/orders")
+    @ResponseStatus(HttpStatus.OK)
     public OrdersPageResponseDTO getAllOrders(
             @Min(0) @RequestParam(defaultValue = "0") Integer page,
             @Min(1) @Max(100) @RequestParam(defaultValue = "20") Integer size,
@@ -48,16 +50,19 @@ public class OrderController {
     }
 
     @GetMapping("/orders/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public OrderResponseDTO getOrderById(@PathVariable UUID id) {
         return orderService.getOrderById(id);
     }
 
     @PutMapping("/orders/{id}/cancel")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void cancelOrder(@PathVariable UUID id) {
         orderService.cancelOrder(id);
     }
 
     @PatchMapping("/orders/{id}/update")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateOrderAdditionalNotes(@PathVariable UUID id, @RequestBody @NotEmpty String orderNotes) {
         orderService.updateOrderAdditionalNotes(id,orderNotes);
     }
@@ -69,11 +74,13 @@ public class OrderController {
     }
 
     @PutMapping("/orders/{id}/restore")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void restoreCanceledOrder(@PathVariable UUID id) {
         orderService.restoreCanceledOrder(id);
     }
 
     @GetMapping("orders/{id}/versions")
+    @ResponseStatus(HttpStatus.OK)
     public OrderVersionsPageResponseDTO getOrderVersions(
             @PathVariable UUID id,
             @Min(0) @RequestParam(defaultValue = "0") Integer page,
